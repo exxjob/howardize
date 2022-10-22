@@ -1,0 +1,25 @@
+{
+    "name": "howardize",
+    "version": "1.0.0",
+    "description": "hoot geiger",
+    "main": "index.html",
+    "scripts": {
+      "start": "serve",
+      "build": "echo"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/exxjob/howardize.git"
+    },
+    "keywords": ["static", "template", "codesandbox"],
+    "author": "Ives van Hoorne",
+    "license": "MIT",
+    "bugs": {
+      "url": "https://stackoverflow.com/"
+    },
+    "homepage": "https://github.com/exxjob/howardize#readme",
+    "devDependencies": {
+      "serve": "^11.2.0"
+    }
+  }
+  

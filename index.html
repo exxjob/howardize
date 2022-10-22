@@ -1,0 +1,126 @@
+<!-- valid args only -->
+<!DOCTYPE html>
+<html>
+  <body
+    style="overflow: hidden; width: 100%; height: 100%; margin: 0; padding: 0;"
+  >
+    <div id="container" style="position: relative; height: 100%; width: 100%;">
+      <div
+        id="overlay"
+        style="
+          grid-area: 1 / 1;
+          width: 100%;
+          height: 100%;
+          background-color: blue;
+        "
+      >
+        <i
+          id="loading"
+          style="
+            color: white;
+            font-size: 300%;
+            position: absolute;
+            top: 85%;
+            left: 5%;
+          "
+        ></i>
+      </div>
+      <div
+        id="img"
+        style="
+          position: absolute;
+          grid-area: 1 / 1;
+          background-color: rgba(50, 50, 50, 0);
+          width: 100%;
+          height: 100%;
+        "
+      ></div>
+
+      <div id="twitch-embed"></div>
+      <script src="https://embed.twitch.tv/embed/v1.js"></script>
+      <script type="text/javascript">
+        console.log("Howardize - a hoot geiger by exxjob");
+
+        uri = window.location.href;
+        channelArg = uri.substring(uri.lastIndexOf("/") + 1);
+        document.title = "Howardize " + channelArg;
+        document.getElementById("loading").innerHTML =
+          "Loading " + channelArg + " ... ... ...";
+
+        function utf8_to_b64(str) {
+          return;
+        }
+
+        var channelName;
+        if (channelArg.endsWith("+")) {
+          channelName = decodeURIComponent(
+            escape(window.atob(channelArg.substring(0, channelArg.length - 2)))
+          );
+          console.log("decoded channel name is " + channelName);
+        } else {
+          channelName = channelArg;
+          console.log(
+            "encoded channel name is " +
+              window.btoa(unescape(encodeURIComponent(channelName)))
+          );
+        }
+
+        var embed = new Twitch.Embed("twitch-embed", {
+          width: "100%",
+          height: "100%",
+          channel: channelName,
+          layout: "video",
+          controls: false,
+          autoplay: true,
+          muted: true,
+          parent: ["localhost", "codesandbox.io", "github.io"]
+        });
+        embed.addEventListener(Twitch.Embed.VIDEO_READY, () => {
+          console.log("VIDEO READY");
+          var player = embed.getPlayer();
+          player.setQuality("160p30");
+          setTimeout(function () {
+            var audio = new Audio("moneylonger.m4a");
+            audio.setAttribute("loop", "true");
+            audio.play();
+
+            portrait = (window.innerWidth * 9) / 16 < window.innerHeight;
+
+            var imgHTML;
+            if (portrait) {
+              var lesser =
+                ((window.innerWidth * 9) / 16 / window.innerHeight) * 100;
+
+              offset =
+                (window.innerHeight - (window.innerHeight * lesser) / 100) / 2;
+
+              imgHTML =
+                '<img src = "howard.gif" type = "image/gif" width="100%" height="' +
+                lesser +
+                '%" style="padding-top:' +
+                offset +
+                'px;">';
+            } else {
+              var lesser =
+                ((window.innerHeight * 16) / 9 / window.innerWidth) * 100;
+
+              offset =
+                (window.innerWidth - (window.innerWidth * lesser) / 100) / 2;
+              imgHTML =
+                '<img src = "howard.gif" type = "image/gif" width="' +
+                lesser +
+                '%" height="100%" style="padding-left:' +
+                offset +
+                'px;">';
+            }
+
+            document.getElementById("img").innerHTML = imgHTML;
+
+            var elem = document.getElementById("overlay");
+            elem.parentNode.removeChild(elem);
+          }, 2250);
+        });
+      </script>
+    </div>
+  </body>
+</html>
