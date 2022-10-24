@@ -42,7 +42,7 @@
         console.log("Howardize - a hoot geiger by exxjob");
 
         uri = window.location.href;
-        channelArg = uri.substring(uri.lastIndexOf("/") + 1);
+        channelArg = uri.substring(uri.lastIndexOf("/") + 2);
         document.title = "Howardize " + channelArg;
         document.getElementById("loading").innerHTML =
           "Loading " + channelArg + " ... ... ...";
@@ -54,14 +54,15 @@
         var channelName;
         if (channelArg.endsWith("+")) {
           channelName = decodeURIComponent(
-            escape(window.atob(channelArg.substring(0, channelArg.length - 2)))
+            escape(window.atob(channelArg.substring(0, channelArg.length - 1)))
           );
-          console.log("decoded channel name is " + channelName);
+          console.log("decoded channel arg is #" + channelName);
         } else {
           channelName = channelArg;
           console.log(
-            "encoded channel name is " +
-              window.btoa(unescape(encodeURIComponent(channelName)))
+            "encoded channel arg is #" +
+              window.btoa(unescape(encodeURIComponent(channelName))) +
+              "+"
           );
         }
 
