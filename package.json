@@ -11,13 +11,13 @@
       "type": "git",
       "url": "git+https://github.com/exxjob/howardize.git"
     },
-    "keywords": ["static", "template", "codesandbox"],
-    "author": "Ives van Hoorne",
+    "keywords": ["static", "twitch", "livestream", "howard", "alien"],
+    "author": "exxjob",
     "license": "MIT",
     "bugs": {
       "url": "https://stackoverflow.com/"
     },
-    "homepage": "https://github.com/exxjob/howardize#readme",
+    "homepage": "https://github.com/exxjob/howardize",
     "devDependencies": {
       "serve": "^11.2.0"
     }
