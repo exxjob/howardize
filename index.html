@@ -17,9 +17,7 @@
         <i
           id="loading"
           style="
-            color: white
-            background-color: blue;
-
+            color: white;
             font-size: 300%;
             position: absolute;
             top: 85%;
@@ -42,30 +40,23 @@
       <script src="https://embed.twitch.tv/embed/v1.js"></script>
       <script type="text/javascript">
         console.log("Howardize - a hoot geiger by exxjob");
-
+        var loaded = false;
+        var started = false;
+        var interacted = false;
+        
         uri = window.location.href;
         channelArg = uri.substring(uri.lastIndexOf("/") + 2);
         document.title = "Howardize " + channelArg;
-        document.getElementById("loading").innerHTML =
-          "Loading " + channelArg + " ... ... ...";
-
-        function utf8_to_b64(str) {
-          return;
-        }
+        var loading = document.getElementById("loading");
+        loading.innerHTML = "Loading " + channelArg + " ... ... ...";
 
         var channelName;
         if (channelArg.endsWith("+")) {
-          channelName = decodeURIComponent(
-            escape(window.atob(channelArg.substring(0, channelArg.length - 1)))
-          );
+          channelName = decodeURIComponent(escape(window.atob(channelArg.substring(0, channelArg.length - 1))));
           console.log("decoded channel arg is #" + channelName);
         } else {
           channelName = channelArg;
-          console.log(
-            "encoded channel arg is #" +
-              window.btoa(unescape(encodeURIComponent(channelName))) +
-              "+"
-          );
+          console.log("encoded channel arg is #" + window.btoa(unescape(encodeURIComponent(channelName))) + "+");
         }
 
         var embed = new Twitch.Embed("twitch-embed", {
@@ -78,16 +69,39 @@
           muted: true,
           parent: ["localhost", "codesandbox.io", "github.io"]
         });
+        
         embed.addEventListener(Twitch.Embed.VIDEO_READY, () => {
           console.log("VIDEO READY");
           var player = embed.getPlayer();
           player.setQuality("160p30");
           setTimeout(function () {
-            var audio = new Audio("moneylonger.m4a");
-            audio.setAttribute("loop", "true");
-            audio.play();
+            loaded=true;
+            
+          
+            if(!interacted){
+            loading.innerHTML =
+            "Click anywhere to proceed";}else{
+              howardUp();
+            }
+            
+          }, 2250);
 
-            portrait = (window.innerWidth * 9) / 16 < window.innerHeight;
+
+        });
+        document.addEventListener("click",()=>{
+          interacted=true;
+          if(loaded && !started){
+            howardUp();
+          }
+        });
+
+        function howardUp(){
+          started=true;
+          var audio = new Audio("moneylonger.m4a");
+              audio.setAttribute("loop", "true");
+              audio.play();
+
+              portrait = (window.innerWidth * 9) / 16 < window.innerHeight;
 
             var imgHTML;
             if (portrait) {
@@ -117,11 +131,11 @@
                 'px;">';
             }
 
+            
             document.getElementById("img").innerHTML = imgHTML;
             var elem = document.getElementById("overlay");
             elem.parentNode.removeChild(elem);
-          }, 2250);
-        });
+        }
       </script>
     </div>
   </body>
